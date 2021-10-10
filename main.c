@@ -8,15 +8,15 @@ Description:
 #include<unistd.h>
 #include"hash.h"
 #include"rlw.h"
-
-int opt;
-char *file;
+#DEFINE INIT_K 10
 
 int main(int argc, char* const argv[]){
   /* This function takes a number n and shows the top n most frequent
   words in the file */
   /*Iterate through options */
-  int k = 10;
+  int k = INIT_K;
+  int opt;
+  char *file;
 
   while((opt = getopt(argc, argv,":n:")) != -1){
     if(opt == 'n'){
@@ -31,9 +31,10 @@ int main(int argc, char* const argv[]){
     }
   }
 
-  /*Initialize hash */
+  /*Initialize hash and vars*/
   hash = hash_init();
   int fileFlag = 0;
+  int val;
 
     /*Iterate through remaining items and test for files */
     for(;optInd < argc; optInd++){
@@ -42,8 +43,8 @@ int main(int argc, char* const argv[]){
             while((word = rlw(file)) != NULL){
                 /*Check if word is stored*/
                 /*If so, increment number*/
-                if(isKey(hash,word)){
-                    insert(hash, word, get(hash, word)+1);
+                if((val = get(hash, word)) != NULL){
+                    insert(hash, word, val+1);
                 }
                 /*If not, Initialize*/
                 else{
@@ -58,8 +59,8 @@ int main(int argc, char* const argv[]){
         while((word = rlw(stdin)) != NULL){
             /*Check if word is stored*/
             /*If so, increment number*/
-            if(isKey(hash,word)){
-                insert(hash, word, get(hash, word)+1);
+            if((val = get(hash, word)) != NULL){
+                insert(hash, word, val+1);
             }
             /*If not, Initialize*/
             else{
@@ -68,6 +69,12 @@ int main(int argc, char* const argv[]){
         }
     }
 
-    /*Find the max value k times and display */
+    /*Find the max value k times and display*/
+    Hash_Table* currTable;
+    printf("The top 10 words (out of %d) are:\n", getNumKeys(hash));
+    for(int i=0; i < k, i++){
+        currTable = popMax(hash);
+        printf("%*%d %s",8,currTable.freq,currTable.word);
+    }
 
 }
