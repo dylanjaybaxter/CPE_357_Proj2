@@ -17,54 +17,59 @@ struct Hash_Table{
 int hash(char * word, Hash_Table *table){
     int len = strlen(word);
     int i;
-    int key = 0;
+    int hash_value = 0;
     int p = 53;
     int p_pow = 1;
-    for (i = 0; i != 0; i++){
-        key += (word[i] * (p_pow)) % table.size;
+    for (i = 0; i < len; i++){
+        hash_value += (word[i] * (p_pow)) % table.size;
         p_pow = (p_pow * p) % table.size;
     }
-    table.items++;
-    return key;
+    return hash_value;
 }
 
 void rehash(Hash_Table *hash){
     hash.size *= 2;
-    hash.table = realloc(hash.table, hash.size);   
+    Node *temp = malloc(hash.size * sizeof(Node));
+    int i;
+    hash.table = 
+       
 }
 
 Hash_Table* init(){
     Hash_Table hash;
-    hash.size = ISIZE;
-    Node *table = malloc(hash.size);
+    *hash.size = ISIZE;
+    Node *table = malloc(*hash.size * sizeof(Node));
     int i;
-    for (i = 0; i <= size; i++){
+    for (i = 0; i < size; i++){
         table[i] = NULL;
     }
     hash.items = 0; 
 }  
 
-void insert(Hash_Table hash, Node word){
+void insert(Hash_Table hash, char * key, Node val){
     int load = get_load_factor(hash);
-    if (load < 0.5){
+    if (load > 0.5){
         rehash(hash);
     }
-    int key = hash(word.word, hash);
-    if (hash.table[key] == NULL || hash.table[key].word == word.word){
-        hash.table[key] = word;
-    }   
-    else{
-        while (hash.table[key] != NULL || hash.table[key].word == word.word){
-            key = ++key % hash.size;
-        }
-        hash.table[key] = word;
+    int hash_val = hash(val.word, hash);
+    while (hash.table[hash_val] != NULL || hash.table[hahs].word != word.word){
+        key = ++key % hash.size;
     }
+    hash.table[hash_val] = val;
+    hash.item++;
 }
 
-Node get(Hash_Table hash, int key){
-    return hash.table[key]
+Node get(Hash_Table hash, int hash_value){
+    while (hash.table[hash_val] != NULL || hash.table[hahs].word != word.word){
+        key = ++key % hash.size;
+    }
+    return hash.table[hash_value]
 }
 
 double get_load_factor(Hash_Table hash){
-    return (double) hash.itms / self.size;
+    return (double) hash.items / hash.size;
 }
+
+Node popMax(){
+}
+
