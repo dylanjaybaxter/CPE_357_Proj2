@@ -33,7 +33,7 @@ void rehash(Hash_Table *hash){
     *temp.size = *hash.size;
     int i;
     for (i = 0; i < *hash.size; i++){
-        if (*hash.table[i] != NULL){
+        if (*hash.table[i].word != NULL){
             insert(temp, *hash.table[i].word, *hash.table[i]);
         }
     }
@@ -46,7 +46,8 @@ Hash_Table* hash_init(){
     Node *table = malloc(*hash.size * sizeof(Node));
     int i;
     for (i = 0; i < size; i++){
-        table[i] = NULL;
+        table[i].word = NULL;
+        table[i].freq = 0;
     }
     *hash.items = 0; 
 }  
@@ -57,7 +58,7 @@ void insert(Hash_Table *hash, char * key, int val){
         rehash(hash);
     }
     int hash_val = hash(key, hash);
-    while (*hash.table[hash_val] != NULL && *hash.table[hash].word != key){
+    while (*hash.table[hash_val].word != NULL && *hash.table[hash].word != key){
         hash_val = ++hash_val % *hash.size;
     }
     *hash.table[hash_val].word = key;
@@ -68,7 +69,7 @@ void insert(Hash_Table *hash, char * key, int val){
 Node get(Hash_Table *hash, char * key){
     int hash_val = hash(key, hash);
     int count = 0;
-    while (*hash.table[hash_val] != NULL && *hash.table[hash].word != key
+    while (*hash.table[hash_val].word != NULL && *hash.table[hash].word != key
             && count != *hash.size){
         hash_val = ++hash_val % *hash.size;
     }
@@ -85,23 +86,38 @@ Node popMax(Hash_Table *hash){
     max.word = "";
     int i;
     for (i = 0; i < *hash.size; i++){
-        if (*hash.table[i] != NULL && *hash.table[i].freq > max.freq){
-            max = hash.table[i];
+        if (*hash.table[i].word != NULL){
+            if (*hash.table[i].freq == max.freq){ 
+                int cmp = strcmp(*hash.table[i].word, max.word);
+                if (cmp > 0){
+                    max = *hash.table[i];
+                }
+            }
+            else if (*hash.table[i]freq > max.freq){
+                max = *hash.table[i];
+            }
         }
         Node out;
         out.freq = max.freq;
         out.word = max.word;
-        *hash.table[i] = NULL;
+        *hash.table[i].word = NULL;
+        *hash.table[i].freq = 0;
         return out;
     }
 }
 
 void remove_node(int ind, Hash_Table *hash){
     free(*hash.table[ind].word);
-    *hash.table[ind] = NULL;
+    *hash.table[ind].word = NULL;
+    *hash.table[ind].freq = 0;
 }
 
 void deconstruct(Hash_Table *hash){
     int i;
-    for (
+    for (i = 0; i < *hash.size; i++){
+        if (*hash.table[i].word != NULL){
+            remove_node(i, hash);
+        }
+    }
+    free(*hash.table);
 }
