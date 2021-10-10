@@ -26,9 +26,9 @@ void rehash(Hash_Table *hash);
 
 Hash_Table* hash_init();
 
-void insert(Hash_Table *hash char * key, Node val);
+void insert(Hash_Table *hash, char * key, int val);
 
-Node get(Hash_Table *hash, int hash_value);
+Node get(Hash_Table *hash, char * key);
 
 double get_load_factor(Hash_Table *hash);
 

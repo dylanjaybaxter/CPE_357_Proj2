@@ -88,8 +88,11 @@ Node popMax(Hash_Table *hash){
         if (*hash.table[i] != NULL && *hash.table[i].freq > max.freq){
             max = hash.table[i];
         }
-        remove_node(i, hash);
-        return max;
+        Node out;
+        out.freq = max.freq;
+        out.word = max.word;
+        *hash.table[i] = NULL;
+        return out;
     }
 }
 
@@ -98,3 +101,7 @@ void remove_node(int ind, Hash_Table *hash){
     *hash.table[ind] = NULL;
 }
 
+void deconstruct(Hash_Table *hash){
+    int i;
+    for (
+}

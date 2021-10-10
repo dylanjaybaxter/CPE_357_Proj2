@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-char *read_long_word(FILE * file){
+char *rlw(FILE * file){
     char *word;
     int len;
     int lim = 256
