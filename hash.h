@@ -10,7 +10,7 @@ Description:
 #define ISIZE = 1024
 
 struct Node{
-    int freq
+    int freq;
     char *word;
 }
 
@@ -24,16 +24,18 @@ int hash(char *word, Hash_Table *table);
 
 void rehash(Hash_Table *hash);
 
-Hash_Table* init();
+Hash_Table* hash_init();
 
 void insert(Hash_Table *hash char * key, Node val);
 
-Node get(Hash_Tabl *hash, int hash_value);
+Node get(Hash_Table *hash, int hash_value);
 
 double get_load_factor(Hash_Table *hash);
 
-Node popMax();
+Node popMax(Hash_Table *hash);
 
 int get_num_items(Hash_Table *hash);
 
-void remove();
+void remove_node(int ind, Hash_Table *hash);
+
+void deconstruct(Hash_Table *hash);
