@@ -52,11 +52,11 @@ void insert(Hash_Table *hash, char * key, int val){
         hash_val++;
         hash_val = hash_val % hash->size;
     }
-    hash->table[hash_val].word = key;
-    hash->table[hash_val].freq = val;
-    if(strcmp(hash->table[hash_val].word, key)!=0){
+    if(hash->table[hash_val].word == NULL){
         hash->items++;
     }
+    hash->table[hash_val].word = key;
+    hash->table[hash_val].freq = val;
 }
 
 Node get(Hash_Table *hash, char * key){

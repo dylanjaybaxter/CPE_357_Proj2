@@ -23,7 +23,7 @@ int main(int argc, char* const argv[]){
   while((opt = getopt(argc, argv,":n:")) != -1){
     if(opt == 'n'){
         if(isdigit(*optarg)){
-            k = *optarg;
+            k = atoi(optarg);
         }
 
     }
@@ -52,11 +52,11 @@ int main(int argc, char* const argv[]){
                 /*If so, increment number*/
                 node = get(hashTable, word);
                 if((node.word) != NULL){
-                    printf("Duplicate: %s\n", word);
+                    /*printf("WordRead: %s \n", word);*/
                     insert(hashTable, word, node.freq+1);
                 }
                 else{ /*If not, Initialize*/
-                    printf("Unique: %s\n", word);
+                    /*printf("WordRead: %s \n", word);*/
                     insert(hashTable, word, 1);
                 }
             }
@@ -72,12 +72,10 @@ int main(int argc, char* const argv[]){
             /*If so, increment number*/
             node = get(hashTable, word);
             if((node.word) != NULL){
-                printf("Duplicate: %s\n", word);
                 insert(hashTable, word, node.freq+1);
             }
             /*If not, Initialize*/
             else{
-                printf("Unique: %s\n", word);
                 insert(hashTable, word, 1);
             }
         }
@@ -90,6 +88,9 @@ int main(int argc, char* const argv[]){
     int i = 0;
     for(; i < k; i++){
         currItem = popMax(hashTable);
+        if(currItem.word == NULL){
+            break;
+        }
         printf("%*d %s\n",8,currItem.freq,currItem.word);
     }
     deconstruct(hashTable);

@@ -11,9 +11,8 @@ char *rlword(FILE * file){
         perror("malloc");
         exit(EXIT_FAILURE);
     }
-    while(isalpha((c = getc(file)) == 0)){
-        /*Do Nothing*/
-
+    while(!isalpha(c = getc(file)) && (c!=-1)){
+        /* Do Nothing */
     }
     ungetc(c, file);
     for (len = 0; isalpha((c = getc(file))); len++){
