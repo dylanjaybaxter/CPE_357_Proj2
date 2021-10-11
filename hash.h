@@ -7,20 +7,20 @@ Description:
 
 #include<string.h>
 #include<stdlib.h>
-#define ISIZE = 1024
+#define ISIZE 1024
 
 struct Node{
     int freq;
     char *word;
-}
+};
 
 struct Hash_Table{
     int size;
     Node *table;
     int items;
-}
+};
 
-int hash(char *word, Hash_Table *table);
+int genHash(char *word, Hash_Table *table);
 
 void rehash(Hash_Table *hash);
 

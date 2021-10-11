@@ -83,7 +83,7 @@ int main(int argc, char* const argv[]){
     printf("The top 10 words (out of %d) are:\n", get_num_items(hashTable));
     for(int i=0; i < k; i++){
         currItem = popMax(hashTable);
-        printf("%*%d %s",8,currItem.freq,currItem.word);
+        printf("%*d %s",8,currItem.freq,currItem.word);
     }
 
 }
