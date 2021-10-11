@@ -11,6 +11,11 @@ char *rlword(FILE * file){
         perror("malloc");
         exit(EXIT_FAILURE);
     }
+    while(isalpha((c = getc(file)) == 0)){
+        /*Do Nothing*/
+
+    }
+    ungetc(c, file);
     for (len = 0; isalpha((c = getc(file))); len++){
         if (len >= lim - 1){
             lim *= 2;
@@ -22,7 +27,9 @@ char *rlword(FILE * file){
         }
         word[len] = c;
     }
-    word[len] = 0;
+    if(isalpha(c)){
+        word[len] = '\0';
+    }
     if(c == EOF && len == 0){
         free(word);
         word = NULL;
