@@ -1,6 +1,4 @@
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
+
 #include "hash.h"
 
 Hash_Table* hash_init(){
@@ -13,6 +11,7 @@ Hash_Table* hash_init(){
         table[i].freq = 0;
     }
     hash->items = 0;
+    hash->table = table;
     return hash;
 }
 
@@ -23,10 +22,10 @@ int genHash(char * word, Hash_Table *table){
     int p = 53;
     int p_pow = 1;
     for (i = 0; i < len; i++){
-        hash_value += (word[i] * (p_pow)) % table->size;
-        p_pow = (p_pow * p) % table->size;
+        hash_value += ((word[i] * (p_pow))) % (table->size);
+        p_pow = (p_pow * p) % (table->size);
     }
-    return hash_value;
+    return hash_value % (table->size);
 }
 
 void rehash(Hash_Table *hash){
@@ -49,29 +48,40 @@ void insert(Hash_Table *hash, char * key, int val){
     }
     int hash_val = genHash(key, hash);
     while (hash->table[hash_val].word != NULL
-        && hash->table[hash_val].word != key){
+        && strcmp(hash->table[hash_val].word, key)!=0){
         hash_val++;
         hash_val = hash_val % hash->size;
     }
     hash->table[hash_val].word = key;
     hash->table[hash_val].freq = val;
-    hash->items++;
+    if(strcmp(hash->table[hash_val].word, key)!=0){
+        hash->items++;
+    }
 }
 
 Node get(Hash_Table *hash, char * key){
     int hash_val = genHash(key, hash);
     int count = 0;
     while (hash->table[hash_val].word != NULL
-        && hash->table[hash_val].word != key
-        && count != hash->size){
+        && strcmp(hash->table[hash_val].word, key) != 0
+        && count < hash->size){
         hash_val++;
         hash_val = hash_val % hash->size;
+        count++;
     }
-    return hash->table[hash_val];
+    if(count != hash->size){
+        return hash->table[hash_val];
+    }
+    else{
+        Node bad;
+        bad.word = NULL;
+        bad.freq = 0;
+        return bad;
+    }
 }
 
-double get_load_factor(Hash_Table hash){
-    return (double) hash.items / hash.size;
+double get_load_factor(Hash_Table *hash){
+    return (double) hash->items / hash->size;
 }
 
 Node popMax(Hash_Table *hash){
@@ -79,24 +89,27 @@ Node popMax(Hash_Table *hash){
     max.freq = 0;
     max.word = '\0';
     int i;
+    int ind;
     for (i = 0; i < hash->size; i++){
         if (hash->table[i].word != NULL){
             if (hash->table[i].freq == max.freq){
                 int cmp = strcmp(hash->table[i].word, max.word);
-                if (cmp > 0){
+                if (cmp < 0){
                     max = hash->table[i];
+                    ind = i;
                 }
             }
             else if (hash->table[i].freq > max.freq){
                 max = hash->table[i];
+                ind = i;
             }
         }
     }
     Node out;
     out.freq = max.freq;
     out.word = max.word;
-    hash->table[i].word = NULL;
-    hash->table[i].freq = 0;
+    hash->table[ind].word = NULL;
+    hash->table[ind].freq = 0;
     return out;
 }
 
@@ -113,5 +126,10 @@ void deconstruct(Hash_Table *hash){
             remove_node(i, hash);
         }
     }
-    free(hash->table);
+    free((*hash).table);
+    free(hash);
+}
+
+int get_num_items(Hash_Table *hash){
+    return hash->items;
 }

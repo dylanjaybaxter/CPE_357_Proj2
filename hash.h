@@ -5,20 +5,22 @@ Author: Dylan Baxter, Van Park
 Description:
 */
 
-#include<string.h>
-#include<stdlib.h>
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define ISIZE 1024
 
-struct Node{
+typedef struct{
     int freq;
     char *word;
-};
+}Node;
 
-struct Hash_Table{
+typedef struct{
     int size;
     Node *table;
     int items;
-};
+}Hash_Table;
 
 int genHash(char *word, Hash_Table *table);
 

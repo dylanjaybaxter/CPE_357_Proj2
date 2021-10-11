@@ -1,7 +1,7 @@
 CC = gcc
-CFLAGS = -Wall -g -ansi
+CFLAGS = -Wall -g -pg -ansi
 LD = gcc
-LDFLAGS = -g
+LDFLAGS = -g -pg
 all: fw main.o rlw.o hash.o
 
 fw: rlw.o hash.o main.o
