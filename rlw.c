@@ -7,6 +7,7 @@ char *rlword(FILE * file){
     int len;
     int lim = 256;
     int c;
+    int wordFlag = 0;
     if(!(word = (char*)malloc(lim))){
         perror("malloc");
         exit(EXIT_FAILURE);
@@ -28,8 +29,11 @@ char *rlword(FILE * file){
             printf("Why do you do this\n");
         }
         word[len] = tolower(c);
+        wordFlag = 1;
     }
-    word[len] = '\0';
+    if(wordFlag){
+        word[len] = '\0';
+    }
     if((c == EOF && len == 0)){
         free(word);
         word = NULL;
