@@ -149,7 +149,7 @@ void deconstruct(Hash_Table *hash){
 int get_num_items(Hash_Table *hash){
     int items = 0;
     int i;
-    for (i = 0; i < hash->size-1; i++){
+    for (i = 0; i < hash->size; i++){
         if(hash->table[i].word != NULL){
             items++;
         }

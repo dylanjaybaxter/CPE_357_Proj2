@@ -22,11 +22,11 @@ int main(int argc, char* const argv[]){
 
   while((opt = getopt(argc, argv,":n:")) != -1){
     if(opt == 'n'){
-        if(isdigit(*optarg)){
+        if(isdigit(*optarg) && atoi(optarg) >= 0){
             k = atoi(optarg);
         }
         else{
-            perror("usage: fw -n integer input_1 input_2");
+            perror("usage: fw -n pos_integer input_1 input_2");
             exit(EXIT_FAILURE);
         }
 
