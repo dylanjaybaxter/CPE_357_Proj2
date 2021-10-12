@@ -25,6 +25,10 @@ int main(int argc, char* const argv[]){
         if(isdigit(*optarg)){
             k = atoi(optarg);
         }
+        else{
+            perror("usage: fw -n integer input_1 input_2");
+            exit(EXIT_FAILURE);
+        }
 
     }
     else if(opt == ':'){
