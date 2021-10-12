@@ -48,7 +48,7 @@ void rehash(Hash_Table *hash){
     free(oldTable);
 }
 
-void insert(Hash_Table *hash, char * key, int val){
+void insert(Hash_Table *hash, char * key){
     double load = get_load_factor(hash);
     if (load > 0.5){
         rehash(hash);
@@ -60,10 +60,12 @@ void insert(Hash_Table *hash, char * key, int val){
         hash_val = hash_val % hash->size;
     }
     if(hash->table[hash_val].word == NULL){
+        hash->table[hash_val].word = key;
         hash->items++;
     }
-    hash->table[hash_val].word = key;
-    hash->table[hash_val].freq = val;
+    else{
+        hash->table[hash_val].freq++;
+    }
 }
 
 Node get(Hash_Table *hash, char * key){
