@@ -25,24 +25,30 @@ int genHash(char * word, Hash_Table *table){
         hash_value += ((word[i] * (p_pow))) % (table->size);
         p_pow = (p_pow * p) % (table->size);
     }
-    return hash_value % (table->size);
+    return abs(hash_value % (table->size));
 }
 
 void rehash(Hash_Table *hash){
-    hash->size *= 2;
-    Hash_Table *temp = hash_init();
-    temp->size = hash->size;
+    int oldSize = hash->size;
+    int newSize = hash->size * 2;
+    Node* oldTable = hash->table;
+    hash->table = (Node*)malloc(newSize * sizeof(Node));
     int i;
-    for (i = 0; i < hash->size; i++){
-        if (hash->table[i].word != NULL){
-            insert(temp, hash->table[i].word, hash->table[i].freq);
+    for (i = 0; i < hash->size-1; i++){
+        hash->table[i].word = NULL;
+        hash->table[i].freq = 0;
+    }
+    for (i = 0; i < oldSize-1; i++){
+        if (oldTable[i].word != NULL){
+            insert(hash, oldTable[i].word, oldTable[i].freq);
         }
     }
-
+    hash->size = newSize;
+    free(oldTable);
 }
 
 void insert(Hash_Table *hash, char * key, int val){
-    int load = get_load_factor(hash);
+    double load = get_load_factor(hash);
     if (load > 0.5){
         rehash(hash);
     }
