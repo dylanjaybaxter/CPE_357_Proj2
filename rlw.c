@@ -24,7 +24,7 @@ char *rlword(FILE * file){
                 exit(EXIT_FAILURE);
             }
         }
-        word[len] = c;
+        word[len] = tolower(c);
     }
     if(isalpha(c)){
         word[len] = '\0';

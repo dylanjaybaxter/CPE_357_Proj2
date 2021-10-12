@@ -38,12 +38,12 @@ void rehash(Hash_Table *hash){
         hash->table[i].word = NULL;
         hash->table[i].freq = 0;
     }
+    hash->size = newSize;
     for (i = 0; i < oldSize-1; i++){
         if (oldTable[i].word != NULL){
             insert(hash, oldTable[i].word, oldTable[i].freq);
         }
     }
-    hash->size = newSize;
     free(oldTable);
 }
 
