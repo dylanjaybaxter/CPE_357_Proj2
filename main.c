@@ -68,7 +68,7 @@ int main(int argc, char* const argv[]){
         }
         else if(file == NULL){
             perror(argv[optind]);
-            exit(EXIT_FAILURE);
+            fileFlag = 1;
         }
     }
 
