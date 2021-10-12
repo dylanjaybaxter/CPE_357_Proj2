@@ -40,7 +40,7 @@ void rehash(Hash_Table *hash){
     }
     hash->size = newSize;
     hash->items = 0;
-    for (i = 0; i < oldSize-1; i++){
+    for (i = 0; i < oldSize; i++){
         if (oldTable[i].word != NULL){
             insert(hash, oldTable[i].word, oldTable[i].freq);
         }
