@@ -18,11 +18,11 @@ test: fw
 	./fw -n 8 test.txt > testOut.txt
 	~pn-cs357/demos/fw -n 8 test.txt > testSol.txt
 	diff -s testOut.txt testSol.txt
-testman:
+testman: fw
 	./fw -n35000 /usr/share/man/*/* > outme.txt
 	~pn-cs357/demos/fw -n35000 /usr/share/man/*/* > outsol.txt
 	diff -s outme.txt outsol.txt
-testwap:
+testwap: fw
 	./fw -n35000 WAP.txt > WAPO.txt
 	~pn-cs357/demos/fw -n35000 WAP.txt > WAPI.txt
 	diff -s WAPO.txt WAPI.txt
