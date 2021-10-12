@@ -24,11 +24,12 @@ char *rlword(FILE * file){
                 exit(EXIT_FAILURE);
             }
         }
+        if(c == 1){
+            printf("Why do you do this\n");
+        }
         word[len] = tolower(c);
     }
-    if(isalpha(c)){
-        word[len] = '\0';
-    }
+    word[len] = '\0';
     if(c == EOF && len == 0){
         free(word);
         word = NULL;

@@ -100,6 +100,7 @@ int main(int argc, char* const argv[]){
             break;
         }
         printf("%*d %s\n",9,currItem.freq,currItem.word);
+        free(currItem.word);
     }
     deconstruct(hashTable);
     return 0;

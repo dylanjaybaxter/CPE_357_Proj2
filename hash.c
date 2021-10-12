@@ -1,4 +1,8 @@
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include<ctype.h>
 #include "hash.h"
 
 Hash_Table* hash_init(){
@@ -33,6 +37,10 @@ void rehash(Hash_Table *hash){
     int newSize = hash->size * 2;
     Node* oldTable = hash->table;
     hash->table = (Node*)malloc(newSize * sizeof(Node));
+    if(!(hash->table)){
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
     int i;
     for (i = 0; i < hash->size; i++){
         hash->table[i].word = NULL;
@@ -48,7 +56,7 @@ void rehash(Hash_Table *hash){
     free(oldTable);
 }
 
-void insert(Hash_Table *hash, char * key){
+void insert(Hash_Table *hash, char * key, int val){
     double load = get_load_factor(hash);
     if (load > 0.5){
         rehash(hash);
@@ -60,12 +68,10 @@ void insert(Hash_Table *hash, char * key){
         hash_val = hash_val % hash->size;
     }
     if(hash->table[hash_val].word == NULL){
-        hash->table[hash_val].word = key;
         hash->items++;
     }
-    else{
-        hash->table[hash_val].freq++;
-    }
+    hash->table[hash_val].word = key;
+    hash->table[hash_val].freq = val;
 }
 
 Node get(Hash_Table *hash, char * key){
@@ -95,11 +101,10 @@ double get_load_factor(Hash_Table *hash){
 
 Node popMax(Hash_Table *hash){
     Node max;
-    Node out;
     max.freq = 0;
     max.word = '\0';
     int i;
-    int ind;
+    int ind = -1;
     if(hash->items > 0){
         for (i = 0; i < hash->size; i++){
             if (hash->table[i].word != NULL){
@@ -116,13 +121,12 @@ Node popMax(Hash_Table *hash){
                 }
             }
         }
-
-        hash->table[ind].word = NULL;
-        hash->table[ind].freq = 0;
+        if(ind != -1){
+            hash->table[ind].word = NULL;
+            hash->table[ind].freq = 0;
+        }
     }
-    out.freq = max.freq;
-    out.word = max.word;
-    return out;
+    return max;
 }
 
 void remove_node(int ind, Hash_Table *hash){
