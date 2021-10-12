@@ -19,8 +19,8 @@ test: fw
 	~pn-cs357/demos/fw -n 8 test.txt > testSol.txt
 	diff -s testOut.txt testSol.txt
 testman:
-	./fw -n35000 /usr/share/man*/* > outme.txt
-	~pn-cs357/demos/fw -n35000 /usr/share/man*/* > outsol.txt
+	./fw -n35000 /usr/share/man/*/* > outme.txt
+	~pn-cs357/demos/fw -n35000 /usr/share/man/*/* > outsol.txt
 	diff -s outme.txt outsol.txt
 testwap:
 	./fw -n35000 WAP.txt > WAPO.txt
