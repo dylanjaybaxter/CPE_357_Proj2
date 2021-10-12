@@ -93,30 +93,33 @@ double get_load_factor(Hash_Table *hash){
 
 Node popMax(Hash_Table *hash){
     Node max;
+    Node out;
     max.freq = 0;
     max.word = '\0';
     int i;
     int ind;
-    for (i = 0; i < hash->size; i++){
-        if (hash->table[i].word != NULL){
-            if (hash->table[i].freq == max.freq){
-                int cmp = strcmp(hash->table[i].word, max.word);
-                if (cmp > 0){
+    if(hash->items > 0){
+        for (i = 0; i < hash->size; i++){
+            if (hash->table[i].word != NULL){
+                if (hash->table[i].freq == max.freq){
+                    int cmp = strcmp(hash->table[i].word, max.word);
+                    if (cmp > 0){
+                        max = hash->table[i];
+                        ind = i;
+                    }
+                }
+                else if (hash->table[i].freq > max.freq){
                     max = hash->table[i];
                     ind = i;
                 }
             }
-            else if (hash->table[i].freq > max.freq){
-                max = hash->table[i];
-                ind = i;
-            }
         }
+
+        hash->table[ind].word = NULL;
+        hash->table[ind].freq = 0;
     }
-    Node out;
     out.freq = max.freq;
     out.word = max.word;
-    hash->table[ind].word = NULL;
-    hash->table[ind].freq = 0;
     return out;
 }
 
