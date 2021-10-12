@@ -96,11 +96,10 @@ int main(int argc, char* const argv[]){
     int i = 0;
     for(; i < k; i++){
         currItem = popMax(hashTable);
-        if(currItem.word == NULL){
-            break;
+        if(currItem.word != NULL){
+            printf("%*d %s\n",9,currItem.freq,currItem.word);
+            free(currItem.word);
         }
-        printf("%*d %s\n",9,currItem.freq,currItem.word);
-        free(currItem.word);
     }
     deconstruct(hashTable);
     return 0;
