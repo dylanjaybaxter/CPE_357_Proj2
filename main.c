@@ -67,7 +67,8 @@ int main(int argc, char* const argv[]){
             fclose(file);
         }
         else if(file == NULL){
-            break;
+            perror(argv[optind]);
+            exit(EXIT_FAILURE);
         }
     }
 
