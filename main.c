@@ -99,7 +99,7 @@ int main(int argc, char* const argv[]){
         if(currItem.word == NULL){
             break;
         }
-        printf("%*d %s\n",8,currItem.freq,currItem.word);
+        printf("%*d %s\n",9,currItem.freq,currItem.word);
     }
     deconstruct(hashTable);
     return 0;
