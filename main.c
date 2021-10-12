@@ -32,11 +32,7 @@ int main(int argc, char* const argv[]){
 
     }
     else if(opt == ':'){
-        printf("No Value!\n");
-        return -1;
-    }
-    else{
-        perror("usage: fw -n integer input_1 input_2");
+        perror("usage: fw -n pos_integer input_1 input_2");
         exit(EXIT_FAILURE);
     }
   }
