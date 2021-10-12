@@ -34,7 +34,7 @@ void rehash(Hash_Table *hash){
     Node* oldTable = hash->table;
     hash->table = (Node*)malloc(newSize * sizeof(Node));
     int i;
-    for (i = 0; i < hash->size-1; i++){
+    for (i = 0; i < hash->size; i++){
         hash->table[i].word = NULL;
         hash->table[i].freq = 0;
     }
