@@ -36,8 +36,8 @@ int main(int argc, char* const argv[]){
         return -1;
     }
     else{
-	    printf("Invalid Option!\n");
-	    return -1;
+        perror("usage: fw -n integer input_1 input_2");
+        exit(EXIT_FAILURE);
     }
   }
 

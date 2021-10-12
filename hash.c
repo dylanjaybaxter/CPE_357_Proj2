@@ -101,7 +101,7 @@ Node popMax(Hash_Table *hash){
         if (hash->table[i].word != NULL){
             if (hash->table[i].freq == max.freq){
                 int cmp = strcmp(hash->table[i].word, max.word);
-                if (cmp < 0){
+                if (cmp > 0){
                     max = hash->table[i];
                     ind = i;
                 }
