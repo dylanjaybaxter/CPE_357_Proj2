@@ -30,7 +30,7 @@ char *rlword(FILE * file){
         word[len] = tolower(c);
     }
     word[len] = '\0';
-    if((c == EOF && len == 0) || word[0] == '\0'){
+    if((c == EOF && len == 0)){
         free(word);
         word = NULL;
     }
