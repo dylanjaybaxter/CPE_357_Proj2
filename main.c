@@ -55,13 +55,15 @@ int main(int argc, char* const argv[]){
                 /*Check if word is stored*/
                 /*If so, increment number*/
                 node = get(hashTable, word);
-                if((node.word) != NULL){
-                    /*printf("WordRead: %s \n", word);*/
-                    insert(hashTable, word, node.freq+1);
-                }
-                else{ /*If not, Initialize*/
-                    /*printf("WordRead: %s \n", word);*/
-                    insert(hashTable, word, 1);
+                if(*word != '!'){
+                    if((node.word) != NULL){
+                        /*printf("WordRead: %s \n", word);*/
+                        insert(hashTable, word, node.freq+1);
+                    }
+                    else{ /*If not, Initialize*/
+                        /*printf("WordRead: %s \n", word);*/
+                        insert(hashTable, word, 1);
+                    }
                 }
             }
             fclose(file);

@@ -34,6 +34,10 @@ char *rlword(FILE * file){
     if(wordFlag){
         word[len] = '\0';
     }
+    else{
+        word[0] = '!';
+        word[1] = '\0';
+    }
     if((c == EOF && len == 0)){
         free(word);
         word = NULL;
