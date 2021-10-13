@@ -21,7 +21,7 @@ int main(int argc, char* const argv[]){
   /*Iterate through options */
   int k = INIT_K;
   int opt;
-  FILE *file;
+  FILE *file = NULL;
 
   /*Search for option -n and assign k if it exsists*/
   while((opt = getopt(argc, argv,":n:")) != -1){
@@ -48,8 +48,9 @@ int main(int argc, char* const argv[]){
   Hash_Table *hashTable = hash_init();
   int fileFlag = 0;
   Node node;
+  node.word = NULL;
 
-    char* word;
+    char* word = NULL;
     /*Iterate through remaining items and test for files */
     for(;optind < argc; optind++){
         if((file = fopen(argv[optind],"r")) != NULL){
@@ -106,6 +107,8 @@ int main(int argc, char* const argv[]){
     /*Find the max value k times and display each
     (Max value removed)*/
     Node currItem;
+    currItem.word = NULL;
+    currItem.freq = 0;
     int items = get_num_items(hashTable);
     printf("The top %d words (out of %d) are:\n",k, items);
     int i = 0;

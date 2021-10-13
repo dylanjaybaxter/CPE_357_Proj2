@@ -46,7 +46,7 @@ void rehash(Hash_Table *hash){
         exit(EXIT_FAILURE);
     }
     int i;
-    for (i = 0; i < hash->size; i++){
+    for (i = 0; i < newSize; i++){
         hash->table[i].word = NULL;
         hash->table[i].freq = 0;
     }
