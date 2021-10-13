@@ -61,9 +61,9 @@ void rehash(Hash_Table *hash){
 }
 
 void insert(Hash_Table *hash, char * key, int val){
-    /* Inserts the given key and value into the repective value 
-     * of its hash. Checks the load factor and if its too low the hash table 
-     * is rehashed. If it runs into a collision linear probing 
+    /* Inserts the given key and value into the repective value
+     * of its hash. Checks the load factor and if its too low the hash table
+     * is rehashed. If it runs into a collision linear probing
      * is used to prevent the collision. */
     double load = get_load_factor(hash);
     if (load > 0.5){
@@ -114,7 +114,7 @@ Node popMax(Hash_Table *hash){
     /* Pop outs the node that contains the highest freq */
     Node max;
     max.freq = 0;
-    max.word = '\0';
+    max.word = NULL;
     int i;
     int ind = -1;
     if(hash->items > 0){
@@ -133,10 +133,10 @@ Node popMax(Hash_Table *hash){
                 }
             }
         }
-        if(ind != -1){
-            hash->table[ind].word = NULL;
-            hash->table[ind].freq = 0;
-        }
+    }
+    if(ind != -1){
+        hash->table[ind].word = NULL;
+        hash->table[ind].freq = 0;
     }
     return max;
 }
@@ -151,13 +151,13 @@ void remove_node(int ind, Hash_Table *hash){
 
 void deconstruct(Hash_Table *hash){
     /* Deconstructs the hash table, freeing all of its data */
-    int i;
+    int i = 0;
     for (i = 0; i < hash->size; i++){
         if (hash->table[i].word != NULL){
             remove_node(i, hash);
         }
     }
-    free((*hash).table);
+    free(hash->table);
     free(hash);
 }
 
