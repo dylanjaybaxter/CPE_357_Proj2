@@ -6,6 +6,7 @@
 #include "hash.h"
 
 Hash_Table* hash_init(){
+    /* Initializes the hash table with NULL words and 0 frequencies */
     Hash_Table* hash = (Hash_Table*)malloc(sizeof(Hash_Table));
     hash->size = ISIZE;
     Node *table = (Node*)malloc(hash->size * sizeof(Node));
@@ -20,6 +21,7 @@ Hash_Table* hash_init(){
 }
 
 int genHash(char * word, Hash_Table *table){
+    /* Generates the hash value from the given key */
     int len = strlen(word);
     int i;
     int hash_value = 0;
@@ -33,6 +35,8 @@ int genHash(char * word, Hash_Table *table){
 }
 
 void rehash(Hash_Table *hash){
+    /* Recreates the hash table with a larger size
+     * As well as reinserting the nodes with updated hash values */
     int oldSize = hash->size;
     int newSize = hash->size * 2;
     Node* oldTable = hash->table;
@@ -57,6 +61,10 @@ void rehash(Hash_Table *hash){
 }
 
 void insert(Hash_Table *hash, char * key, int val){
+    /* Inserts the given key and value into the repective value 
+     * of its hash. Checks the load factor and if its too low the hash table 
+     * is rehashed. If it runs into a collision linear probing 
+     * is used to prevent the collision. */
     double load = get_load_factor(hash);
     if (load > 0.5){
         rehash(hash);
@@ -75,6 +83,7 @@ void insert(Hash_Table *hash, char * key, int val){
 }
 
 Node get(Hash_Table *hash, char * key){
+    /* Returns the node from the hash table from the given key */
     int hash_val = genHash(key, hash);
     int count = 0;
     while (hash->table[hash_val].word != NULL
@@ -96,10 +105,13 @@ Node get(Hash_Table *hash, char * key){
 }
 
 double get_load_factor(Hash_Table *hash){
+    /* Returns the load factor of the hash table
+     * This is used for the insert method */
     return (double) hash->items / hash->size;
 }
 
 Node popMax(Hash_Table *hash){
+    /* Pop outs the node that contains the highest freq */
     Node max;
     max.freq = 0;
     max.word = '\0';
@@ -130,12 +142,15 @@ Node popMax(Hash_Table *hash){
 }
 
 void remove_node(int ind, Hash_Table *hash){
+    /* Removes a node at the given index from the hash table.
+     * While also freeing the data within the previous node */
     free(hash->table[ind].word);
     hash->table[ind].word = NULL;
     hash->table[ind].freq = 0;
 }
 
 void deconstruct(Hash_Table *hash){
+    /* Deconstructs the hash table, freeing all of its data */
     int i;
     for (i = 0; i < hash->size; i++){
         if (hash->table[i].word != NULL){
@@ -147,6 +162,7 @@ void deconstruct(Hash_Table *hash){
 }
 
 int get_num_items(Hash_Table *hash){
+    /* Returns the number of items from the given hash table */
     int items = 0;
     int i;
     for (i = 0; i < hash->size; i++){
