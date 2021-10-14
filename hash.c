@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include<ctype.h>
+#include <ctype.h>
 #include "hash.h"
 
 Hash_Table* hash_init(){
